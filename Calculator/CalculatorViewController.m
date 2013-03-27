@@ -16,6 +16,7 @@
 
 @implementation CalculatorViewController
     @synthesize display = _display;
+    @synthesize userDisplay = _userDisplay;
     @synthesize brain = _brain;
     @synthesize userIsInTheMiddleOfEnteringAText = _userIsInTheMiddleOfEnteringAText;
     -(CalculatorBrain *)brain
@@ -34,10 +35,12 @@
     }
     - (IBAction)operationPressed:(UIButton *)sender {
         if(self.userIsInTheMiddleOfEnteringAText) [self enterPressed];
+        self.userDisplay.text = [self.userDisplay.text stringByAppendingString:[sender.currentTitle stringByAppendingString:@" "]];
         double result = [self.brain performOperation:sender.currentTitle];
             self.display.text = [NSString stringWithFormat:@"%g", result];
     }
     - (IBAction)enterPressed {
+      self.userDisplay.text = [self.userDisplay.text stringByAppendingString:[self.display.text stringByAppendingString:@" "]];
         [self.brain pushOperand:[self.display.text doubleValue]];
         self.userIsInTheMiddleOfEnteringAText = NO;
     }
@@ -45,6 +48,7 @@
     [self.brain emptyStack];
     self.userIsInTheMiddleOfEnteringAText = NO;
     self.display.text = @"0";
+    self.userDisplay.text = @" ";
 }
 - (IBAction)floatPressed:(id)sender {
     if (self.userIsInTheMiddleOfEnteringAText) {
@@ -57,5 +61,16 @@
         self.userIsInTheMiddleOfEnteringAText = YES;
     }
 
-} 
+}
+- (IBAction)piPressed:(id)sender {
+    if(self.userIsInTheMiddleOfEnteringAText){
+   self.userDisplay.text = [self.userDisplay.text stringByAppendingString:[self.display.text stringByAppendingString:@" "]];
+    [self.brain pushOperand:[self.display.text doubleValue]];
+    self.userIsInTheMiddleOfEnteringAText = NO;
+    }
+    self.display.text = [NSString stringWithFormat:@"%g",M_PI];
+    self.userDisplay.text = [self.userDisplay.text stringByAppendingString:[self.display.text stringByAppendingString:@" "]];
+    [self.brain pushOperand:M_PI];
+    
+}
 @end
