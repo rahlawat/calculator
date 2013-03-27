@@ -51,6 +51,14 @@
     {
         result = sqrt(operand1);
     }
+    else if([@"Sin" isEqualToString:operation])
+    {
+     result =  sin(operand1 *M_PI/180);
+    }
+    else if([@"Cos" isEqualToString:operation])
+    {
+        result =  cos(operand1 *M_PI/180);
+    }
     [self pushOperand:result];
     return result;
 }

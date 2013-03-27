@@ -46,4 +46,16 @@
     self.userIsInTheMiddleOfEnteringAText = NO;
     self.display.text = @"0";
 }
+- (IBAction)floatPressed:(id)sender {
+    if (self.userIsInTheMiddleOfEnteringAText) {
+        NSRange range = [self.display.text rangeOfString:@"."];
+        if(range.location == NSNotFound     ) {
+        self.display.text = [self.display.text stringByAppendingString:@"."];
+        }
+    } else {
+        self.display.text = [@"0" stringByAppendingString:@"."];
+        self.userIsInTheMiddleOfEnteringAText = YES;
+    }
+
+} 
 @end
